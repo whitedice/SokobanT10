@@ -84,7 +84,7 @@ public class Sokoban
             play = false;
         }
 
-        return feld;
+        return feld; // Wenn alles passt, das Feld zurückgeben
     }
 
     public static void main(String[] args) throws Exception {
@@ -142,7 +142,6 @@ public class Sokoban
                         room[i+x][j+y] = 'P'; // Den gefundenen Spieler dann verschieben
                         room[i][j] = '.';
                     }
-
                     return;
                 }
             }
