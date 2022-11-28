@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class Sokoban
 {
-    public static boolean play = true; // Boolean erstellt der angibt, ob das Spiel aktuell lÃ¤uft
+    public static boolean play = true; // Boolean erstellt der angibt, ob das Spiel aktuell läuft
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in); // Scanner fÃ¼r die Eingabe vom Benutzer erstellen
+        Scanner input = new Scanner(System.in); // Scanner für die Eingabe vom Benutzer erstellen
         char [][] room = new char[8][4];
 
         // Anfangsspielbrett definieren
@@ -24,12 +24,12 @@ public class Sokoban
                 case 3 -> left(room);
                 case 4 -> right(room);
                 case 5 -> play = false;
-                default -> System.out.println("UngÃ¼ltige Eingabe\n"); // Abfragen ob der Nutzer irgendwas anderes als 1-5 eingegeben hat
+                default -> System.out.println("Ungültige Eingabe\n"); // Abfragen ob der Nutzer irgendwas anderes als 1-5 eingegeben hat
             }
 
             System.out.println(); // Abstand zwischen den Tabellen generieren
         }
-        input.close(); // Input wieder schlieÃŸen
+        input.close(); // Input wieder schließen
         System.out.println("Spiel beendet!");
     }
 
@@ -48,7 +48,7 @@ public class Sokoban
             for (int i=0;i<room.length;++i) {
                 if (room[i][j] == 'P') { // Schauen, wo der Spieler sich gerade befindet
 
-                    // Den ArrayIndexOutOfBoundsException Fehler abfangen â†’ Tritt auf, wenn Nutzer aus dem Spielfeld ausbrechen wÃ¼rde
+                    // Den ArrayIndexOutOfBoundsException Fehler abfangen → Tritt auf, wenn Nutzer aus dem Spielfeld ausbrechen würde
                     if (i+x < 0 || i+x > 7 || j+y < 0 || j+y > 3) {
                         System.out.println("Warnung: Du kannst nicht aus dem Spielfeld laufen!");
                     }
@@ -63,7 +63,7 @@ public class Sokoban
         }
     }
 
-    // Move Befehle "Ã¼bersetzen"
+    // Move Befehle "übersetzen"
     public static void up(char[][] room) {
         move(room, 0, -1);
     }
