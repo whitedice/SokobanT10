@@ -89,7 +89,7 @@ public class Sokoban
 
     public static void main(String[] args) throws Exception {
         // Args auslesen
-        Path fp = Paths.get("src\\sokoban.txt"); // Pfad bestimmen
+        Path fp = Paths.get("sokoban.txt"); // Pfad bestimmen
         if (args.length != 0)
         {
             fp = Paths.get(args[0]); // Falls Argumente gegeben wurden diese verwenden
