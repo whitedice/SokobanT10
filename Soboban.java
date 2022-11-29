@@ -119,27 +119,38 @@ public class Sokoban
         System.out.println("Spiel beendet!");
     }
 
-    // Aktuelles Spielfeld in der Konsole ausgeben
+    // Aktuelles Spielfeld in der Konsole ausgeben -> Überprüft auch nebenbei, ob das Spiel gewonnen ist
     public static void printRoom(char[][] room) {
+        int chestsLeft = 0;
         for (int j=0; j<room[0].length; ++j) {
             for (int i=0; i<room.length; ++i) {
                 System.out.print(room[i][j]);
+                if (room[i][j] == '$') {
+                    chestsLeft += 1;
+                }
             }
             System.out.println();
+
+            // Überprüfen, ob das Spiel gewonnen wurde
+            if (chestsLeft == 0)
+            {
+                play = false;
+                System.out.println("Herzlichen Glückwunsch! Du hast das Spiel gewonnen!");
+            }
         }
     }
 
-    public static void move(char[][] room, int x, int y) {
+    public static void movePlayer(char[][] room, int moveX, int moveY) {
         for (int j=0;j<room[0].length;++j) {
             for (int i=0;i<room.length;++i) {
-                if (room[i][j] == 'P') { // Schauen, wo der Spieler sich gerade befindet
+                if (room[i][j] == '@' || room[i][j] == '+') { // Schauen, wo der Spieler sich gerade befindet
 
                     // Den ArrayIndexOutOfBoundsException Fehler abfangen → Tritt auf, wenn Nutzer aus dem Spielfeld ausbrechen würde
-                    if (i+x < 0 || i+x > 7 || j+y < 0 || j+y > 3) {
+                    if (i+moveX < 0 || i+moveX > 7 || j+moveY < 0 || j+moveY > 3) {
                         System.out.println("Warnung: Du kannst nicht aus dem Spielfeld laufen!");
                     }
                     else {
-                        room[i+x][j+y] = 'P'; // Den gefundenen Spieler dann verschieben
+                        room[i+moveX][j+moveY] = 'P'; // Den gefundenen Spieler dann verschieben
                         room[i][j] = '.';
                     }
                     return;
@@ -148,17 +159,38 @@ public class Sokoban
         }
     }
 
+    public static boolean moveChest(char[][] room, int targetposX, int targetPosY) {
+        boolean possible = true;
+        // Mögliche Fälle abgleichen
+        if (room[targetposX][targetPosY] == '#') // Stößt gegen die Wand
+        {
+            possible = false; // Zurückmelden, dass die Bewegung nicht möglich ist
+            System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");
+        }
+        if (room[targetposX][targetPosY] == ' ') // Gerät auf ein leeres Feld
+        {
+            room[targetposX][targetPosY] = '$';
+        }
+        if (room[targetposX][targetPosY] == '.') // Gerät auf ein Zielfeld
+        {
+            room[targetposX][targetPosY] = '*';
+        }
+        // "Move Spieler" muss dann darauf reagieren, wenn er gegen eine Kiste läuft
+        // ⇾ Wenn diese sich nicht bewegen kann, kann der Spieler diese bewegung folglich auch nicht ausführen
+        return possible;
+    }
+
     // Move Befehle "übersetzen"
     public static void up(char[][] room) {
-        move(room, 0, -1);
+        movePlayer(room, 0, -1);
     }
     public static void down(char[][] room) {
-        move(room, 0, 1);
+        movePlayer(room, 0, 1);
     }
     public static void left(char[][] room) {
-        move(room, -1, 0);
+        movePlayer(room, -1, 0);
     }
     public static void right(char[][] room) {
-        move(room, 1, 0);
+        movePlayer(room, 1, 0);
     }
 }
