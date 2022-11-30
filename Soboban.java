@@ -141,17 +141,39 @@ public class Sokoban
     }
 
     public static void movePlayer(char[][] room, int moveX, int moveY) {
+        char lastPos = ' '; //für Feld, das im letzten Zug ersetzt wurde, damit keine wichtigen Zeichen verschwinden (funktioniert noch nicht)
         for (int j=0;j<room[0].length;++j) {
             for (int i=0;i<room.length;++i) {
                 if (room[i][j] == '@' || room[i][j] == '+') { // Schauen, wo der Spieler sich gerade befindet
-
-                    // Den ArrayIndexOutOfBoundsException Fehler abfangen → Tritt auf, wenn Nutzer aus dem Spielfeld ausbrechen würde
-                    if (i+moveX < 0 || i+moveX > 7 || j+moveY < 0 || j+moveY > 3) {
-                        System.out.println("Warnung: Du kannst nicht aus dem Spielfeld laufen!");
+                    if (room[i+moveX][j+moveY] == '#') {
+                        System.out.println("Warnung: Du läufst gegen eine Wand");
+                    }
+                    else if (room[i+moveX][j+moveY] == '.') {   // Spieler landet auf Zielfeld
+                        room[i+moveX][j+moveY] = '+';
+                        room[i][j] = lastPos;
+                        lastPos = '.';
+                    }
+                    else if (room[i+moveX][j+moveY] == ' ') {   // Spieler landet auf leerem Feld
+                        room[i + moveX][j + moveY] = 'P';
+                        room[i][j] = lastPos;
+                        lastPos = ' ';
+                    }
+                    else if (room[i+moveX][j+moveY] == '$') {
+                        if (moveChest(room, i + 2 * moveX, j + 2 * moveY)) {
+                            room[i + moveX][j + moveY] = 'P';
+                            room[i][j] = lastPos;
+                            lastPos = '$';
+                        }
+                    }
+                    else if (room[i+moveX][j+moveY] == '*') {
+                        if (moveChest(room, i + 2 * moveX, j + 2 * moveY)) {
+                            room[i + moveX][j + moveY] = 'P';
+                            room[i][j] = lastPos;
+                            lastPos = '*';
+                        }
                     }
                     else {
-                        room[i+moveX][j+moveY] = 'P'; // Den gefundenen Spieler dann verschieben
-                        room[i][j] = '.';
+                        System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");   //aus moveChest kopiert
                     }
                     return;
                 }
@@ -162,10 +184,10 @@ public class Sokoban
     public static boolean moveChest(char[][] room, int targetposX, int targetPosY) {
         boolean possible = true;
         // Mögliche Fälle abgleichen
-        if (room[targetposX][targetPosY] == '#') // Stößt gegen die Wand
+            // Stößt gegen die Wand (oder gegen eine andere Kiste bzw Zielfeld)
+        if (room[targetposX][targetPosY] == '#' || room[targetposX][targetPosY] == '*' || room[targetposX][targetPosY] == '$')
         {
             possible = false; // Zurückmelden, dass die Bewegung nicht möglich ist
-            System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");
         }
         if (room[targetposX][targetPosY] == ' ') // Gerät auf ein leeres Feld
         {
