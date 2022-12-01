@@ -199,7 +199,7 @@ public class Sokoban
         // TargetPos = Kiste auf einem Zielfeld
         else if (room[plPosX+moveX][plPosY+moveY] == '*') {
             if (moveChest(room, plPosX + 2 * moveX, plPosY + 2 * moveY)) {
-                room[plPosX + moveX][plPosY + moveY] = '@';
+                room[plPosX + moveX][plPosY + moveY] = '+';
                 room[plPosX][plPosY] = ' ';
             }
             else {
