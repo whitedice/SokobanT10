@@ -22,7 +22,7 @@ public class Sokoban
         char [][] room = ReadTXT(fp);
 
         while (play) {
-            printRoom(room); // Den aktuellen Raum ausgeben & Überpfüfen, ob das spiel schon gewonnen wurde
+            printRoom(room); // Den aktuellen Raum ausgeben & Überprüfen, ob das spiel schon gewonnen wurde
 
             if (play) // Deswegen erneuter check, ob das Spiel nicht schon beendet wurde
             {
@@ -40,7 +40,7 @@ public class Sokoban
             System.out.println(); // Abstand zwischen den Tabellen generieren
         }
         input.close(); // Input wieder schließen
-        System.out.println("Spiel beendet!");
+        System.out.println("Spiel beendet...");
     }
 
 
@@ -192,7 +192,7 @@ public class Sokoban
                     room[plPosX][plPosY]= ' ';
             }
             else {
-                System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");   //aus moveChest kopiert
+                System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");   // Hinweis senden, wenn sich die Kisten nicht bewegen kann
             }
         }
 
@@ -203,26 +203,26 @@ public class Sokoban
                 room[plPosX][plPosY] = ' ';
             }
             else {
-                System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");   //aus moveChest kopiert
+                System.out.println("Warnung: Die Kiste kann sich dort nicht hinbewegen");   // Hinweis senden, wenn sich die Kisten nicht bewegen kann
             }
         }
     }
-    public static boolean moveChest(char[][] room, int targetposX, int targetPosY) {
+    public static boolean moveChest(char[][] room, int targetPosX, int targetPosY) {
         boolean possible = true;
         // Mögliche Fälle abgleichen
 
         // Stößt gegen die Wand (oder gegen eine andere Kiste bzw Zielfeld)
-        if (room[targetposX][targetPosY] == '#' || room[targetposX][targetPosY] == '*' || room[targetposX][targetPosY] == '$')
+        if (room[targetPosX][targetPosY] == '#' || room[targetPosX][targetPosY] == '*' || room[targetPosX][targetPosY] == '$')
         {
             possible = false; // Zurückmelden, dass die Bewegung nicht möglich ist
         }
-        if (room[targetposX][targetPosY] == ' ') // Gerät auf ein leeres Feld
+        if (room[targetPosX][targetPosY] == ' ') // Kiste kommt auf ein leeres Feld
         {
-            room[targetposX][targetPosY] = '$';
+            room[targetPosX][targetPosY] = '$';
         }
-        if (room[targetposX][targetPosY] == '.') // Gerät auf ein Zielfeld
+        if (room[targetPosX][targetPosY] == '.') // Kiste kommt auf ein Zielfeld
         {
-            room[targetposX][targetPosY] = '*';
+            room[targetPosX][targetPosY] = '*';
         }
         return possible;
     }
