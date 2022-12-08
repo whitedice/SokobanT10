@@ -1,3 +1,5 @@
+package Sokoban;
+
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.nio.file.Files;
@@ -100,7 +102,9 @@ public class Sokoban
         while ((line = readLines.readLine()) != null) {
             int i = 0;
             while (i < x) {
-                char current = line.charAt(i);
+                char current = '#';
+                try { current = line.charAt(i); }
+                catch (Exception ignored) { }
                 // Grammatik unseres Spieles abfragen & die wichtigen Werte Zählen
                 switch (String.valueOf(current)) {
                     case "#", " ", "*": // Eigentlich müsste * anzKisten und anzZielPos je um 1 erhöhen...
