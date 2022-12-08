@@ -1,5 +1,3 @@
-package Sokoban;
-
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.nio.file.Files;
